@@ -50,7 +50,7 @@ $(document).on("click", ".scrape-new", function() {
   // Now make an ajax call for the Article
   $.ajax({
     method: "GET",
-    url: "/articles/" + thisId
+    url: "/scrape"
   })
     // With that done, add the note information to the page
     .then(function(data) {
@@ -71,6 +71,8 @@ $(document).on("click", ".scrape-new", function() {
         // Place the body of the note in the body textarea
         $("#bodyinput").val(data[0].note.body);
       }
+    }).catch(function(err) {
+      res.json(err);
     });
 });
 
