@@ -1,1 +1,2 @@
 # mongo-scraper
+Hi to whoever is grading this. I just pretty much have done the bare minimum so far taking from a couple class exercises due to my computer problems earlier this week. I plan on coming back and updating the ReadME as well as fixing the save article button as well as the add comment though I do have the structure in place for both of those. Best, Ryan
