@@ -1,17 +1,47 @@
 // Grab the articles as a json
-$.getJSON("/articles", function(data) {
-  // For each one
-  for (var i = 0; i < data.length; i++) {
-    // Display the apropos information on the page
-    $("#articles").append("<p data-id='" + data[i]._id + "'>" + data[i].title + "<br />" + data[i].link + "</p>");
-  }
-});
+
+  $.getJSON("/articles", function(data) {
+    // For each one
+    for (var i = 0; i < data.length; i++) {
+      // Display the apropos information on the page
+      var article = data[i];
+      $(".article-container").append(createPanel(article))
+    }
+  });
+
+
+function createPanel(article) {
+  // This functiont takes in a single JSON object for an article/headline
+  // It constructs a jQuery element containing all of the formatted HTML for the
+  // article panel
+  var panel = $(
+    [
+      "<div class='panel panel-default'>",
+      "<div class='panel-heading'>",
+      "<h3>",
+      "<a class='article-link' target='_blank' href='" + article.link + "'>",
+      article.title,
+      "</a>",
+      "<a class='btn btn-success save' data-id='" + article._id + "'>",
+      "Save Article",
+      "</a>",
+      "</h3>",
+      "</div>",
+      "<div class='panel-body'>",
+      article.summary,
+      "</div>",
+      "</div>"
+    ].join("")
+  );
+  
+  return panel;
+}
 
 var thisId;
 
 
 // Whenever someone clicks a p tag
-$(document).on("click", "p", function() {
+$(document).on("click", ".scrape-new", function() {
   // Empty the notes from the note section
   $("#notes").empty();
   // Save the id from the p tag
@@ -45,7 +75,7 @@ $(document).on("click", "p", function() {
 });
 
 // When you click the savenote button
-$(document).on("click", "#savenote", function() {
+$(document).on("click", ".save", function() {
   // Grab the id associated with the article from the submit button
   var thisId = $(this).attr("data-id");
 
@@ -62,8 +92,6 @@ $(document).on("click", "#savenote", function() {
   })
     // With that done
     .then(function(data) {
-      // Log the response
-      console.log(data);
       // Empty the notes section
       $("#notes").empty();
     });
